@@ -2,16 +2,23 @@
 
 {% block content %}
 
+<div class="container">
+    <div>
 
-    <ul>
-    {% for todo in todos  %}
-    
-        <li>{{todo}}</li>
-    
-        
+<form action="/add/" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="ADD">
+</form>
+</div>
+
+<div></div>
+<ul>
+    {% for todo in todos %}
+        <li><a href="{% url 'update' todo.id %}">{{todo}}</a></li>
     {% endfor %}
-    </ul>    
+</ul> 
+</div>
+</div>
 
-
-        
 {% endblock content %}

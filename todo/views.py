@@ -5,20 +5,35 @@ from .forms import TodoForm
 
 def home(request):
     todos = Todo.objects.all()
-    contex = {
-        "todos" : todos
+    form = TodoForm()
+    
+    context = {
+        "todos" : todos,
+        "form" : form
     }
-    return render(request, "todo/home.html", contex)
+    return render(request, "todo/home.html", context)
+
 
 def todo_create(request):
     form = TodoForm()
-    if request.method = "POST":
+    
+    if request.method == "POST":
         form = TodoForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect("home")
-    contex = {
+    
+    context = {
         "form" : form
     }
+    return render(request, "todo/todo_add.html", context)
 
-    return render(request, "todo/todo_add.html", contex)
+def todo_update(request, id):
+    todo = Todo.objects.get(id=id)
+    form = TodoForm(instance=todo)
+    
+    context = {
+        "todo" : todo,
+        "form" : form
+    }
+    return render(request, "todo/todo_update.html", context)
